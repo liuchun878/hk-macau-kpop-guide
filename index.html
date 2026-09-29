@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="creative-medium" content="interactive-prototype" />
+  <title>港澳追星攻略 · K-POP FAN TRAVEL GUIDE</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230a0a1a'/%3E%3Ccircle cx='16' cy='16' r='9' fill='%23ff2d95'/%3E%3Ccircle cx='23' cy='9' r='3.5' fill='%23a855f7'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Bebas+Neue&family=Orbitron:wght@500;700;900&display=swap" />
+  <script src="https://sf3-scmcdn-cn.feishucdn.com/obj/feishu-static/miaoda/coding-unpkg-sdk/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
+  <script src="https://sf3-scmcdn-cn.feishucdn.com/obj/feishu-static/miaoda/coding-unpkg-sdk/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
+  <script src="https://sf3-scmcdn-cn.feishucdn.com/obj/feishu-static/miaoda/coding-unpkg-sdk/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+  <script type="text/babel" src="components/tweaks-panel.jsx"></script>
+  <script type="text/babel" src="components/Navbar.jsx"></script>
+  <script type="text/babel" src="components/Hero.jsx"></script>
+  <script type="text/babel" src="components/Venues.jsx"></script>
+  <script type="text/babel" src="components/PhotoMap.jsx"></script>
+  <script type="text/babel" src="components/Guide.jsx"></script>
+  <script type="text/babel" src="components/Itinerary.jsx"></script>
+  <script type="text/babel" src="components/FAQ.jsx"></script>
+  <script type="text/babel" src="components/Footer.jsx"></script>
+  <script type="text/babel" src="components/BackToTop.jsx"></script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const TWEAK_DEFAULTS = {
+      "accentColor": "#ff2d95",
+      "secondaryColor": "#a855f7",
+      "glowIntensity": 1,
+      "neonMode": true
+    };
+
+    function App() {
+      const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+
+      const cssVars = {
+        '--accent': t.accentColor,
+        '--secondary': t.secondaryColor,
+        '--glow-mult': t.glowIntensity,
+      };
+
+      return (
+        <div className="app" style={cssVars}>
+          <Navbar />
+          <Hero />
+          <Venues />
+          <PhotoMap />
+          <Guide />
+          <Itinerary />
+          <FAQ />
+          <Footer />
+          <BackToTop />
+          <TweaksPanel>
+            <TweakSection label="主题色" />
+            <TweakColor
+              label="主强调色"
+              value={t.accentColor}
+              options={['#ff2d95', '#06b6d4', '#f59e0b', '#10b981', '#f43f5e']}
+              onChange={(v) => setTweak('accentColor', v)}
+            />
+            <TweakColor
+              label="副强调色"
+              value={t.secondaryColor}
+              options={['#a855f7', '#6366f1', '#ec4899', '#8b5cf6']}
+              onChange={(v) => setTweak('secondaryColor', v)}
+            />
+            <TweakSection label="特效" />
+            <TweakSlider
+              label="霓虹光强度"
+              value={t.glowIntensity}
+              min={0}
+              max={2}
+              step={0.1}
+              unit="x"
+              onChange={(v) => setTweak('glowIntensity', v)}
+            />
+            <TweakToggle
+              label="霓虹模式"
+              value={t.neonMode}
+              onChange={(v) => setTweak('neonMode', v)}
+            />
+          </TweaksPanel>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
